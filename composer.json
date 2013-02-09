@@ -1,0 +1,5 @@
+{
+    "require": {
+        "itbz/fpdf": "dev-master"
+    }
+}
