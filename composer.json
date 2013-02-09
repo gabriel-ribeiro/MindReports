@@ -1,5 +1,18 @@
 {
+    "name": "gabriel-ribeiro/mindreports",
+    "description": "Mind's Report Generator Module for ZF2",
+    "license": "MIT",
+    "keywords": [
+        "jasper",
+        "iReports",
+        "ZF2",
+        "reports",
+        "pdf",
+    ],
+    "minimum-stability" : "dev",
+    "homepage": "https://github.com/gabriel-ribeiro/MindReports",
     "require": {
+        "php": ">=5.4",
         "itbz/fpdf": "dev-master"
     }
 }
