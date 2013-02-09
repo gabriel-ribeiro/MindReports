@@ -9,15 +9,16 @@
 		
 	    public static function generatePage(JasperXMLParser $parser) {
 	    
-	    	$page = new Page();
+	    	$page = new Page($parser);
 	    
 	    	$leftMargin		= (int) (string) $parser->get('leftMargin');
 	    	$topMargin		= (int) (string) $parser->get('topMargin');
 	    	$rightMargin	= (int) (string) $parser->get('rightMargin');
 	    
 	    	$page->SetMargins($leftMargin, $topMargin, $rightMargin);
-	    	$page->AddPage();
 	    	$page->SetFont('Arial', '', 13);
+	    	$page->setPageX($leftMargin);
+	    	$page->setPageY($topMargin);
 	    	
 	    	return $page;
 

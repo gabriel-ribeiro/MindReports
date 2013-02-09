@@ -47,6 +47,19 @@ use MindReports\Elements\ImageElement;
 	    }
 	    
 	    public function generate() {
+			$this->page->AddPage();
+			$this->generateHead();
+			$this->generateColumnHeader();
+
+			$index = 0;
+			foreach($this->databaseData as $row) {
+				$this->generateDetail($index);
+				$index++;
+			}
+	    	
+	    }
+	    
+	    protected function generateHead() {
 	    	
 	        $titleNode = $this->configuration->get('xmlObject')->title;
 	        $titleBand = $titleNode->band;
@@ -66,8 +79,59 @@ use MindReports\Elements\ImageElement;
 	        foreach($titleBand->image as $image) {
 	        	$this->appendImage($image);
 	        }
-
 	        
+	        $this->page->setUsed((int) (string) $titleNode->band->attributes()['height']);
+	        
+	    }
+
+	    protected function generateColumnHeader() {
+	    	
+	        $columnHeaderNode = $this->configuration->get('xmlObject')->columnHeader;
+	        $columnHeaderBand = $columnHeaderNode->band;
+	        
+	        foreach($columnHeaderBand->staticText as $staticText) {
+	        	$this->appendStaticText($staticText);
+	        }
+
+	        foreach($columnHeaderBand->textField as $textField) {
+	        	$this->appendTextField($textField);
+	        }
+
+	        foreach($columnHeaderBand->line as $line) {
+	        	$this->appendLine($line);
+	        }
+
+	        foreach($columnHeaderBand->image as $image) {
+	        	$this->appendImage($image);
+	        }
+	        
+	        $this->page->setUsed((int) (string) $columnHeaderNode->band->attributes()['height']);
+
+	    }
+
+	    protected function generateDetail($index = 0) {
+	    	
+	        $detailNode = $this->configuration->get('xmlObject')->detail;
+	        $detailBand = $detailNode->band;
+	        
+	        foreach($detailBand->staticText as $staticText) {
+	        	$this->appendStaticText($staticText);
+	        }
+
+	        foreach($detailBand->textField as $textField) {
+	        	$this->appendTextField($textField, $index);
+	        }
+
+	        foreach($detailBand->line as $line) {
+	        	$this->appendLine($line);
+	        }
+
+	        foreach($detailBand->image as $image) {
+	        	$this->appendImage($image);
+	        }
+	        
+	        $this->page->setUsed((int) (string) $detailNode->band->attributes()['height']);
+
 	    }
 	    
 	    public function getPage() {
@@ -82,8 +146,8 @@ use MindReports\Elements\ImageElement;
 	    	$this->page = $pagina;
 	    }
 	    
-	    protected function appendTextField($textField) {
-	    	$textFieldObject = new TextFieldElement($this->databaseData);
+	    protected function appendTextField($textField, $index = 0) {
+	    	$textFieldObject = new TextFieldElement($this->databaseData, $index);
 	    	$textFieldObject->setElementInfo($textField);
 	    	$textFieldObject->setPageInfo($this->configuration);
 	    	$pagina = $textFieldObject->append($this->page);

@@ -18,9 +18,9 @@
 			$height = (int) (string) $attr['height'];
 			
 			$this->xEnd = ($this->xStart + $width) - 1;
-			$this->yEnd = ($this->yStart + $height) + 1;
+			$this->yEnd = ($this->yStart + $height) - 1;
 			
-			$page->Line($this->xStart, $this->yStart, $this->xEnd, $this->yEnd);
+			$page->Line($this->xStart, $this->yStart + $page->getUsed(), $this->xEnd, $this->yEnd + $page->getUsed());
 			
 			return $page;
 			
