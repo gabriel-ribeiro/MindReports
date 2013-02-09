@@ -7,7 +7,7 @@
         "iReports",
         "ZF2",
         "reports",
-        "pdf",
+        "pdf"
     ],
     "minimum-stability" : "dev",
     "homepage": "https://github.com/gabriel-ribeiro/MindReports",
